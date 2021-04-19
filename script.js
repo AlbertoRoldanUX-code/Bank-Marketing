@@ -35,7 +35,7 @@ document.addEventListener('keydown', function (e) {
 
 const message = document.createElement('div');
 
-//Add styling to message
+//Add class to message
 message.classList.add('cookie-message');
 
 //Create message
@@ -54,3 +54,11 @@ const cookieBtn = document.querySelector('.btn--close-cookie');
 cookieBtn.addEventListener('click', function () {
   message.remove();
 });
+
+////
+
+//Add style to message
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';

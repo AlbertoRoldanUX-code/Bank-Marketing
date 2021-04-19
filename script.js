@@ -55,10 +55,21 @@ cookieBtn.addEventListener('click', function () {
   message.remove();
 });
 
-////
-
 //Add style to message
 message.style.backgroundColor = '#37383d';
 message.style.width = '120%';
 message.style.height =
   Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+
+////Implement smooth scrolling
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+
+const section1 = document.querySelector('#section--1');
+
+//Scrolling
+btnScrollTo.addEventListener('click', function (e) {
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+////////

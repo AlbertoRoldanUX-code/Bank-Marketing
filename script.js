@@ -2,7 +2,6 @@
 
 ///////////////////////////////////////
 // Modal window
-
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
@@ -33,24 +32,20 @@ document.addEventListener('keydown', function (e) {
 
 //////////////////////////////////////////////////
 
+//Create cookie message and button
 const message = document.createElement('div');
+message.innerHTML =
+  'We use cookies for improved functionality and analytics. <button class= "btn btn--close-cookie">Got it!</button>';
 
 //Add class to message
 message.classList.add('cookie-message');
 
-//Create message
-message.innerHTML =
-  'We use cookies for improved functionality and analytics. <button class= "btn btn--close-cookie">Got it!</button>';
-
-const header = document.querySelector('.header');
-
 //Display cookie message
+const header = document.querySelector('.header');
 header.append(message);
 
 //Close cookie message when clicking on button
 const cookieBtn = document.querySelector('.btn--close-cookie');
-
-//Remove message when clicking on the button
 cookieBtn.addEventListener('click', function () {
   message.remove();
 });
@@ -61,15 +56,24 @@ message.style.width = '120%';
 message.style.height =
   Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
 
-////Implement smooth scrolling
-
+////Implement smooth scrolling for section 1 when clicking on Learn More button
 const btnScrollTo = document.querySelector('.btn--scroll-to');
-
 const section1 = document.querySelector('#section--1');
 
-//Scrolling
 btnScrollTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
-////////
+////////////////////////////////////////////////////////
+
+//Smooth scrolling to sections using event delegation:
+//1º Add event listener to a common parent element
+//2º Determine what element originated the event
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+  //Matching strategy
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});

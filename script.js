@@ -64,16 +64,44 @@ btnScrollTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
-////////////////////////////////////////////////////////
-
 //Smooth scrolling to sections using event delegation:
 //1º Add event listener to a common parent element
-//2º Determine what element originated the event
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
+  //2º Determine what element originated the event
   //Matching strategy
   if (e.target.classList.contains('nav__link')) {
     const id = e.target.getAttribute('href');
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
+});
+
+////////////////////////////////////////////////////////
+//Implement tabbed component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  //Select clicked tab
+  const clicked = e.target.closest('.operations__tab');
+
+  // Guard clause
+  if (!clicked) return;
+
+  // Remove active class for tab
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+
+  //Add active class for tab
+  clicked.classList.add('operations__tab--active');
+
+  //Remove content
+  tabsContent.forEach(content =>
+    content.classList.remove('operations__content--active')
+  );
+
+  //Display content according to tab selected
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
 });

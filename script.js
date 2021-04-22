@@ -76,7 +76,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
   }
 });
 
-////////////////////////////////////////////////////////
 //Implement tabbed component
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
@@ -105,3 +104,34 @@ tabsContainer.addEventListener('click', function (e) {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+
+////////////////////////////////////////////////////////
+//Fade out all links in navbar when hovering over one of them
+//Select whole nav
+const nav = document.querySelector('.nav');
+
+const handelHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    //Select link and its siblings
+    const siblings = e.target.closest('nav').querySelectorAll('.nav__link');
+
+    //Select logo
+    const logo = e.target.closest('.nav').querySelector('img');
+
+    //Change opacity of siblings
+    siblings.forEach(el => {
+      if (el !== e.target) el.style.opacity = this;
+    });
+
+    //Change opacity of logo
+    logo.style.opacity = this;
+  }
+};
+
+//Passing an "argument" into the handler function
+// When hovering
+nav.addEventListener('mouseover', handelHover.bind(0.5));
+
+//////////////////////////////
+// When the mouse leaves the nav
+nav.addEventListener('mouseout', handelHover.bind(1));

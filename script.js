@@ -105,7 +105,6 @@ tabsContainer.addEventListener('click', function (e) {
     .classList.add('operations__content--active');
 });
 
-////////////////////////////////////////////////////////
 //Fade out all links in navbar when hovering over one of them
 //Select whole nav
 const nav = document.querySelector('.nav');
@@ -132,6 +131,9 @@ const handelHover = function (e) {
 // When hovering
 nav.addEventListener('mouseover', handelHover.bind(0.5));
 
-//////////////////////////////
 // When the mouse leaves the nav
 nav.addEventListener('mouseout', handelHover.bind(1));
+
+////////////////////////////////////////////////////////
+
+//Implement a sticky navigation

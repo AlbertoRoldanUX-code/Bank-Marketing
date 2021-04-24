@@ -139,7 +139,6 @@ nav.addEventListener('mouseout', handelHover.bind(1));
 //3º Create callback function
 const stickyNav = function (entries) {
   const [entry] = entries;
-  console.log(entry);
 
   if (!entry.isIntersecting) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
@@ -197,7 +196,6 @@ allSections.forEach(function (section) {
 //5º Reference real image in a data-src attribute.
 //6º Select all images which have the property of data-src
 const imgTargets = document.querySelectorAll('img[data-src]');
-console.log(imgTargets);
 
 //7º Create callback function
 const loadImg = function (entries, observer) {
@@ -224,3 +222,107 @@ const imgObserver = new IntersectionObserver(loadImg, {
 
 //11º Attach imgObserver to all targets
 imgTargets.forEach(img => imgObserver.observe(img));
+
+///////////////////////
+//Implement slider component
+const slider = function () {
+  const slides = document.querySelectorAll('.slide');
+
+  //Put all slides side by side
+  slides.forEach((s, i) => (s.style.transform = `translateX(${i}00%)`));
+
+  const btnLeft = document.querySelector('.slider__btn--left');
+  const btnRight = document.querySelector('.slider__btn--right');
+
+  let curSlide = 0;
+  let maxSlide = slides.length - 1;
+
+  //Create dots
+  const dotContainer = document.querySelector('.dots');
+
+  const createDots = function () {
+    slides.forEach(function (_, i) {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${i}"></button>`
+      );
+    });
+  };
+
+  //Give different background color to dot with active slide
+  const activateDot = function (slide) {
+    //Select all dots and remove class
+    // document
+    //   .querySelectorAll('.dots__dot')
+    //   .forEach(dot => dot.classList.remove('.dots__dot--active'));
+
+    document
+      .querySelectorAll('.dots__dot')
+      .forEach(dot => dot.classList.remove('dots__dot--active'));
+
+    //Give active class to dot with current slide
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add('dots__dot--active');
+  };
+
+  const goToSlide = function (slide) {
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+    );
+  };
+
+  //Push slides to the left
+  const nextSlide = function () {
+    if (curSlide === maxSlide) {
+      curSlide = 0;
+    } else {
+      curSlide++;
+    }
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  };
+
+  //Push slides to the right
+  const previousSlide = function () {
+    if (curSlide === 0) {
+      curSlide = maxSlide;
+    } else {
+      curSlide--;
+    }
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  };
+
+  const init = function () {
+    goToSlide(0);
+    createDots();
+    activateDot(0);
+  };
+  init();
+
+  //Event handlers
+  btnRight.addEventListener('click', nextSlide);
+
+  btnLeft.addEventListener('click', previousSlide);
+
+  //Handle keyboard events
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') {
+      previousSlide();
+    } else if (e.key === 'ArrowRight') {
+      nextSlide();
+    }
+  });
+
+  //Make dots work
+  dotContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('dots__dot')) {
+      const { slide } = e.target.dataset;
+      //Go to selected slide
+      goToSlide(slide);
+      activateDot(slide);
+    }
+  });
+};
+slider();

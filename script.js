@@ -1,6 +1,7 @@
 'use strict';
 
 ///////////////////////////////////////
+
 // Modal window
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
@@ -66,7 +67,7 @@ btnScrollTo.addEventListener('click', function (e) {
 
 //Smooth scrolling to sections using event delegation:
 //1º Add event listener to a common parent element
-document.querySelector('.nav__links').addEventListener('click', function (e) {
+document.querySelector('.nav-links').addEventListener('click', function (e) {
   e.preventDefault();
   //2º Determine what element originated the event
   //Matching strategy
